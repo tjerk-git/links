@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Links</title>
+    <style>
+        /* Dieter Rams inspired design */
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #666666;
+            --background-color: #ffffff;
+            --accent-color: #ff0000;
+            --spacing-unit: 1.5rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: var(--spacing-unit);
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin: calc(var(--spacing-unit) * 2) 0;
+            padding-bottom: var(--spacing-unit);
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .links-list li {
+            margin: calc(var(--spacing-unit) / 2) 0;
+            padding: var(--spacing-unit);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: var(--spacing-unit);
+            align-items: center;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .links-list li:hover {
+            border-color: var(--accent-color);
+        }
+
+        .links-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .links-list a::after {
+            content: '→';
+            position: relative;
+            opacity: 0;
+            margin-left: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .links-list a:hover::after {
+            opacity: 1;
+        }
+
+        .date-added {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            font-weight: 300;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: calc(var(--spacing-unit) / 2);
+            }
+
+            .links-list li {
+                grid-template-columns: 1fr;
+                gap: calc(var(--spacing-unit) / 2);
+            }
+
+            .date-added {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Saved Links</h1>
+    <ul class="links-list">
+        <% links.forEach(function(link) { %>
+            <li>
+                <a href="<%= link.url %>" target="_blank"><%= link.url %></a>
+                <span class="date-added"><%= new Date(link.date_added).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }) %></span>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
