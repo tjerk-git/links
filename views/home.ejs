@@ -2,113 +2,150 @@
 <html>
 <head>
     <title>Links</title>
+    <link rel="stylesheet" href="https://fonts.bunny.net/css">
     <style>
-        /* Dieter Rams inspired design */
         :root {
-            --primary-color: #000000;
-            --secondary-color: #666666;
-            --background-color: #ffffff;
-            --accent-color: #ff0000;
-            --spacing-unit: 1.5rem;
+            --pink: #FF79A4;
+            --black: #2F2F2F;
+            --off-white: #F4EFEF;
+            --light-pink: #F4CDCD;
+            --purple: #A55C8E;
+            --font-family: 'Inter', sans-serif;
+            --background: #fff3fd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-            max-width: 960px;
+            font-family: var(--font-family);
+            background: var(--background);
+            margin: 0;
+            padding: 0;
+            font-size: 1.25rem;
+            line-height: 1.5;
+        }
+
+        main {
+            padding: 2rem 1rem;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: var(--spacing-unit);
-            background-color: var(--background-color);
-            color: var(--primary-color);
-            line-height: 1.6;
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 3rem;
+            color: var(--black);
+            margin-bottom: 2rem;
             font-weight: 400;
-            letter-spacing: -0.02em;
-            margin: calc(var(--spacing-unit) * 2) 0;
-            padding-bottom: var(--spacing-unit);
-            border-bottom: 1px solid var(--secondary-color);
         }
 
-        .links-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .playlist-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.4rem;
+            background: var(--off-white);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .links-list li {
-            margin: calc(var(--spacing-unit) / 2) 0;
-            padding: var(--spacing-unit);
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: var(--spacing-unit);
-            align-items: center;
-            border: 1px solid transparent;
+        .playlist-table tr {
+            height: 5rem;
             transition: all 0.2s ease;
         }
 
-        .links-list li:hover {
-            border-color: var(--accent-color);
+        .playlist-table tr:nth-child(odd) {
+            background: rgba(0, 0, 0, 0.03);
         }
 
-        .links-list a {
-            color: var(--primary-color);
+        .playlist-table th,
+        .playlist-table td {
+            padding: 1rem 2rem;
+            font-weight: 400;
+            text-align: left;
+        }
+
+        .playlist-table th {
+            background: var(--purple);
+            color: var(--off-white);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .playlist-table td a {
+            color: var(--purple);
             text-decoration: none;
-            font-size: 1.1rem;
-            position: relative;
+            transition: color 0.2s ease;
         }
 
-        .links-list a::after {
-            content: '→';
-            position: relative;
-            opacity: 0;
-            margin-left: 0.5rem;
-            transition: opacity 0.2s ease;
+        .playlist-table td a:hover {
+            color: var(--pink);
         }
 
-        .links-list a:hover::after {
-            opacity: 1;
+        .playlist-table tr:hover {
+            background: rgba(0, 0, 0, 0.05);
+            cursor: pointer;
         }
 
-        .date-added {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            font-weight: 300;
+        .date-column {
             white-space: nowrap;
+            color: var(--black);
+            opacity: 0.7;
         }
 
         @media (max-width: 768px) {
             body {
-                padding: calc(var(--spacing-unit) / 2);
+                font-size: 1rem;
             }
 
-            .links-list li {
-                grid-template-columns: 1fr;
-                gap: calc(var(--spacing-unit) / 2);
+            h1 {
+                font-size: 2rem;
+                padding: 0 1rem;
             }
 
-            .date-added {
-                font-size: 0.8rem;
+            .playlist-table {
+                font-size: 1rem;
+            }
+
+            .playlist-table th,
+            .playlist-table td {
+                padding: 0.75rem 1rem;
+            }
+
+            .date-column {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <h1>Saved Links</h1>
-    <ul class="links-list">
-        <% links.forEach(function(link) { %>
-            <li>
-                <a href="<%= link.url %>" target="_blank"><%= link.url %></a>
-                <span class="date-added"><%= new Date(link.date_added).toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }) %></span>
-            </li>
-        <% }); %>
-    </ul>
+    <main>
+        <h1>Tjerk's Links</h1>
+        <table class="playlist-table">
+            <thead>
+                <tr>
+                    <th>Link</th>
+                    <th>Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% links.forEach(function(link) { %>
+                    <tr>
+                        <td><a href="<%= link.url %>" target="_blank"><%= link.url %></a></td>
+                        <td class="date-column"><%= new Date(link.date_added).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }) %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </main>
 </body>
 </html>
