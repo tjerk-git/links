@@ -14,7 +14,7 @@ app.use(express.json());
 // Set up EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'views'));
-const PORT = 3000;
+const PORT = 1337;
 // Redirect root to links page
 app.get('/', (req, res) => {
     res.redirect('/links');
